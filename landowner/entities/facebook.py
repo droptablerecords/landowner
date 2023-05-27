@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Objects representing exported data
-
+import json
 from landowner.entities.base import AbstractEntity
 
 class Post(AbstractEntity):   
@@ -24,6 +24,8 @@ class PostData(AbstractEntity):
         self.text = text
         self.update_timestamp = update_timestamp
 
+    def __repr__(self):
+        return self.toJSON()
 
 class TextAttachment(AbstractEntity):
     def __init__(self, text=""):
