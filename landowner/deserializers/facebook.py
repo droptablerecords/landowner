@@ -98,7 +98,8 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
     def deserialize(self, data):
         posts = []
         for item in data:
-            print(f"About to process item with timestamp: {item['timestamp']}")
+            # DEBUG
+            # print(f"About to process item with timestamp: {item['timestamp']}")
             post = Facebook.Post()
             post.title = self._sanitize_string_value(item.get('title')) if isinstance(item.get('title'), str) else ""
             post.timestamp = item.get('timestamp')
