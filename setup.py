@@ -17,7 +17,7 @@ setup(
     description='A Python package for working with export files from the big social media platforms.',
     long_description=readme,
     author='Loran Allen Smith',
-    author_email='hi@loranallensmith.me',
+    author_email='howdy@l13h.net',
     url='https://github.com/loranallensmith/landowner',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
