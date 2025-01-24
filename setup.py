@@ -14,7 +14,7 @@ with open('LICENSE') as f:
 setup(
     name='landowner',
     version='0.1.0',
-    description='A Python package for working with export files from the big social media platforms.',
+    description='A Python package for working with export files of your personal data from the big social media platforms.',
     long_description=readme,
     author='Loran Allen Smith',
     author_email='howdy@l13h.net',

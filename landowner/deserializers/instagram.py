@@ -4,18 +4,36 @@ from .base import SocialMediaExportDeserializer
 from ..entities import instagram as Instagram
 
 class InstagramPostExportDeserializer(SocialMediaExportDeserializer):
+    """
+    A class responsible for deserializing Instagram post export data from a JSON structure.
+
+    This class extends `SocialMediaExportDeserializer` and implements the deserialization logic
+    for extracting and converting Instagram post data into corresponding Instagram entities like `Post`,
+    `Media`, and `ExifData`.
+
+    Methods:
+        deserialize(data): Deserialize the provided JSON-like data into a list of `Post` objects.
+    """
 
     def __init__(self):
+        """
+        Initializes an instance of the InstagramPostExportDeserializer class.
+        """
         super().__init__()
     
     def deserialize(self, data):
-        """Deserialize a JSONDecoder list into a list of Post objects
+        """
+        Deserialize a JSONDecoder list into a list of Post objects.
 
         Args:
-            data (list): a JSONDecoder object
+            data (list): A list of Instagram post export data, decoded from JSON.
 
         Returns:
-            list: a list of Post objects
+            list: A list of `Post` objects populated with data extracted from the provided input.
+
+        Notes:
+            - The post's `title` and `timestamp` are handled differently based on the number of media items.
+            - The method addresses a known issue with Unicode encoding, fixing mojibaking caused by Meta's exporter.
         """
         posts = []
         for item in data:

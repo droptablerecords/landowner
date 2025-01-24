@@ -4,11 +4,43 @@ from .base import SocialMediaExportDeserializer
 from ..entities import facebook as Facebook
 
 class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
+    """
+    A class responsible for deserializing Facebook post export data from a JSON structure.
+    
+    This class extends `SocialMediaExportDeserializer` and implements the deserialization logic
+    for extracting and converting data from a Facebook-specific format into corresponding Facebook
+    entities like `Post`, `Media`, `Place`, `Event`, and `ExternalContext`.
+
+    Methods:
+        _extract_event_attachment(event_dict): Extracts event data from the given dictionary.
+        _extract_external_context_attachment(external_context_dict): Extracts external context data.
+        _extract_media_attachment(media_dict): Extracts media data, including EXIF metadata.
+        _extract_post_data(data_list): Extracts post data from the list of provided dictionaries.
+        _extract_place_attachment(place_dict): Extracts place-related data from the dictionary.
+        _extract_text_attachment(attachment_data_item): Extracts and sanitizes text data.
+        _sanitize_string_value(value): Sanitizes string data to handle different encodings.
+        deserialize(data): Deserialize the provided JSON-like data into a list of `Post` objects.
+    """
 
     def __init__(self):
+        """
+        Initializes an instance of the FacebookPostExportDeserializer class.
+        """
         super().__init__()
 
     def _extract_event_attachment(self, event_dict):
+        """
+        Extracts event data from the given dictionary and returns an `Event` object.
+
+        Args:
+            event_dict (dict): A dictionary containing event data.
+
+        Returns:
+            Facebook.Event: The populated event object.
+
+        Notes:
+            Handles the `place` attribute and nested coordinate data.
+        """
         event_object = Facebook.Event()
         for key in event_dict:
             if hasattr(event_object, key):
@@ -27,6 +59,15 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
 
 
     def _extract_external_context_attachment(self, external_context_dict):
+        """
+        Extracts external context data from the dictionary and returns an `ExternalContext` object.
+
+        Args:
+            external_context_dict (dict): A dictionary containing external context data.
+
+        Returns:
+            Facebook.ExternalContext: The populated external context object.
+        """
         external_context_object = Facebook.ExternalContext()
         for attribute in external_context_dict:
             if hasattr(external_context_object, attribute):
@@ -35,6 +76,15 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
 
 
     def _extract_media_attachment(self, media_dict):
+        """
+        Extracts media attachment data, including metadata (EXIF), and returns a `Media` object.
+
+        Args:
+            media_dict (dict): A dictionary containing media metadata and properties.
+
+        Returns:
+            Facebook.Media: The populated media object with associated EXIF data.
+        """
         md_uri = media_dict.get('uri')
         md_title = self._sanitize_string_value(media_dict.get('title')) if isinstance(media_dict.get('title'), str) else ""
         md_description = self._sanitize_string_value(media_dict.get('description')) if isinstance(media_dict.get('description'), str) else ""
@@ -62,6 +112,15 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
 
     
     def _extract_post_data(self, data_list):
+        """
+        Extracts post data from a list of dictionaries and returns a `PostData` object.
+
+        Args:
+            data_list (list): A list of dictionaries containing post-related data.
+
+        Returns:
+            Facebook.PostData: The populated post data object.
+        """
         post_data_object = Facebook.PostData()
         for list_item in data_list:
             if 'post' in list_item:
@@ -77,6 +136,15 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
 
     
     def _extract_place_attachment(self, place_dict):
+        """
+        Extracts place-related data and returns a `Place` object.
+
+        Args:
+            place_dict (dict): A dictionary containing place data.
+
+        Returns:
+            Facebook.Place: The populated place object.
+        """
         place_object = Facebook.Place()
         for key in ['name', 'address', 'url']:
             if key in place_dict:
@@ -89,10 +157,28 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
 
 
     def _extract_text_attachment(self, attachment_data_item):
+        """
+        Extracts text from the given attachment data and returns a `TextAttachment` object.
+
+        Args:
+            attachment_data_item (dict): A dictionary containing attachment data with a text field.
+
+        Returns:
+            Facebook.TextAttachment: The populated text attachment object.
+        """
         sanitized_text_value = self._sanitize_string_value(attachment_data_item['text'])
         return Facebook.TextAttachment(sanitized_text_value)
 
     def _sanitize_string_value(self, value):
+        """
+        Sanitizes string values to ensure they are properly encoded and decoded for various character sets.
+
+        Args:
+            value (str): The string value to be sanitized.
+
+        Returns:
+            str: The sanitized string, ensuring it can be safely encoded and decoded.
+        """
         if isinstance(value, str):
             try:
                 # Attempt to decode the string using 'latin-1' encoding first, then encode it back to 'utf-8'
@@ -105,6 +191,15 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
         return value
     
     def deserialize(self, data):
+        """
+        Deserialize the provided JSON-like data into a list of `Post` objects.
+
+        Args:
+            data (list): A list of dictionaries containing Facebook post export data.
+
+        Returns:
+            list: A list of `Post` objects populated with data extracted from the provided input.
+        """
         posts = []
         for item in data:
             # DEBUG
