@@ -18,7 +18,7 @@ setup(
     long_description=readme,
     author='Loran Allen Smith',
     author_email='howdy@l13h.net',
-    url='https://github.com/loranallensmith/landowner',
+    url='https://github.com/droptablerecords/landowner',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
