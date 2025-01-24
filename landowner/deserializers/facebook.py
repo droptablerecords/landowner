@@ -93,7 +93,16 @@ class FacebookPostExportDeserializer(SocialMediaExportDeserializer):
         return Facebook.TextAttachment(sanitized_text_value)
 
     def _sanitize_string_value(self, value):
-        return value.encode('LATIN-1').decode('UTF-8')
+        if isinstance(value, str):
+            try:
+                # Attempt to decode the string using 'latin-1' encoding first, then encode it back to 'utf-8'
+                return value.encode('latin-1').decode('utf-8')
+            except (UnicodeEncodeError, UnicodeDecodeError):
+                try:
+                    return value.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
+                except (UnicodeEncodeError, UnicodeDecodeError):
+                    return value
+        return value
     
     def deserialize(self, data):
         posts = []
