@@ -5,7 +5,7 @@ import json
 # Abstract base class for entities
 class AbstractEntity:
     
-    def __init__():
+    def __init__(self):
         pass
 
     def toJSON(self):
