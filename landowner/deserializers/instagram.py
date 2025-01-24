@@ -46,7 +46,7 @@ class InstagramPostExportDeserializer(SocialMediaExportDeserializer):
                 exif_data = Instagram.ExifData()
                 
                 # Not all entries contain metadata.
-                if 'media_metadata' in item:
+                if 'media_metadata' in media:
                     
                     # If the media item is a video, its URI will contain the substring ".mp4" in it.
                     #  The metadata for videos and photos exists at different locations.
@@ -54,9 +54,9 @@ class InstagramPostExportDeserializer(SocialMediaExportDeserializer):
                     
                     # Only attempt to set values that are in the data.
                     #   Not every post has every piece of possible metadata.
-                    for attribute in item['media_metadata'][metadata_key]['exif_data'][0]:
+                    for attribute in media['media_metadata'][metadata_key]['exif_data'][0]:
                         if hasattr(exif_data, attribute):
-                            setattr(exif_data, attribute)
+                            setattr(exif_data, attribute, media['media_metadata'][metadata_key]['exif_data'][0][attribute])
                 
                 # Create a Media object and add the media to the Post object.
                 media_item = Instagram.Media(uri, timestamp, exif_data)
