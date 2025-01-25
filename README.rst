@@ -43,7 +43,7 @@ To start using the project, run the following command:
 
 .. code-block:: bash
     import json
-    from landowner.deserializers import FacebookDeserializer
+    from landowner.deserializers import FacebookExportPostDeserializer
 
     ds = FacebookPostExportDeserializer()
     
@@ -60,9 +60,9 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 License
 -------
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the GNU General Public Licence v3.0. See the LICENSE file for more details.
 
 Contact
 -------
 
-For any questions or inquiries, please contact Allen Smith at allen@example.com.
+For any questions or inquiries, please contact Drop Table Records at info@droptablerecords.com.
