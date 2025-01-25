@@ -17,8 +17,8 @@ setup(
     packages=find_packages(exclude=('tests', 'docs')),
     description='A Python package for working with export files of your personal data from the big social media platforms.',
     long_description=readme,
-    author='Loran Allen Smith',
-    author_email='howdy@l13h.net',
+    author='Drop Table Records',
+    author_email='info@droptablerecords.com',
     url='https://github.com/droptablerecords/landowner',
     license=license,
 )
