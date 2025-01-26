@@ -13,7 +13,7 @@ with open('LICENSE') as f:
 
 setup(
     name='landowner',
-    version='0.1.0',
+    version='0.1.1',
     packages=find_packages(exclude=('tests', 'docs')),
     description='A Python package for working with export files of your personal data from the big social media platforms.',
     long_description=readme,
